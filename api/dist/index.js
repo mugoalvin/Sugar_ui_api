@@ -101,7 +101,7 @@ app.get('/historical/:country', async (req, res) => {
         const results = await AppDataSource
             .getRepository(Sugar)
             .createQueryBuilder("sugar")
-            .select(["sugar.productName", "sugar.size", "sugar.price", "sugar.country", "sugar.timestamp"])
+            .select(["sugar.productName", "sugar.size", "sugar.price", "sugar.discount", "sugar.country", "sugar.timestamp"])
             .where("sugar.country = :country", { country: country })
             .addOrderBy("sugar.timestamp", "DESC")
             .getMany();

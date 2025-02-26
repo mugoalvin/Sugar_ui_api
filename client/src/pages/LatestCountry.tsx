@@ -5,6 +5,7 @@ import { Sugar } from "@/inferfaces"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
+import { calculatePricePerKg } from "./AllSugar"
 
 const LatestCountry = () => {
 	const [allSugar, setAllSugar] = useState<Sugar[]>()
@@ -14,6 +15,7 @@ const LatestCountry = () => {
 	useEffect(() => {
 		axios.get(`http://localhost:1337/sugar/${country}`)
 			.then(res => {
+				calculatePricePerKg(res.data)
 				setAllSugar(res.data)
 			})
 			.catch(error => {
@@ -23,12 +25,11 @@ const LatestCountry = () => {
 
 	return (
 		<>
-			<Header title={`Specific ${country}`} />
-			<main className="p-5">
-				<div className="flex flex-col justify-center w-full">
-					<DataSelector />
-					<CustomTable listOfData={allSugar || []} />
-				</div>
+			<Header title={`Latest In ${country}`} />
+			<main className="p-5 h-dvh bg-neutral-900">
+					<div className="flex gap-5 bg-blue-950 rounded-2xl p-4 mt-5">
+						<CustomTable listOfData={allSugar || []} />
+					</div>
 			</main>
 		</>
 	)

@@ -17,7 +17,7 @@ Ensure you have the following installed:
 
 - [Node.js](https://nodejs.org/)
 - [TypeORM](https://typeorm.io/)
-- [PostgreSQL/MySQL](https://www.postgresql.org/) or any supported database
+- [PostgreSQL](https://www.postgresql.org/) or any supported database
 
 ### Clone the Repository
 
@@ -29,8 +29,14 @@ cd sugar-api
 ### Install Dependencies
 
 ```sh
-npm install
+cd client && npm install
 ```
+Then:
+
+```sh
+cd ../api && npm install
+```
+
 
 ### Configure the Database
 
@@ -52,7 +58,7 @@ export const AppDataSource = new DataSource({
 ### Run the Server
 
 ```sh
-npm start
+npm run dev
 ```
 
 The API will be available at `http://localhost:1337/`
@@ -105,7 +111,7 @@ The API will be available at `http://localhost:1337/`
 - **Node.js** - Server runtime
 - **Express.js** - Backend framework
 - **TypeORM** - ORM for database operations
-- **PostgreSQL/MySQL** - Database
+- **PostgreSQL** - Database
 - **Cors** - Middleware for handling CORS
 
 ## License

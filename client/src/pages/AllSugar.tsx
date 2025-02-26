@@ -5,23 +5,35 @@ import { CustomTable } from "@/components/customTable"
 import DataSelector from "@/components/dataSelector"
 import Header from "@/components/Header"
 
+export const calculatePricePerKg = (products: Sugar[]) => {
+	products.forEach((sugar) => {
+		const weightMatch = sugar.size?.match(/([\d.]+)\s*kg/i);
+		const weightInKg = weightMatch ? parseFloat(weightMatch[1]) : null;
+
+		sugar.pricePerKg = weightInKg ? parseFloat((sugar.price / weightInKg).toFixed(2)) : undefined
+	})
+}
+
+
 const AllSugar = () => {
-	const [allSugar, setAllSugar] = useState<Sugar[]>()
+	const [fetchedSugar, setFetchedSugar] = useState<Sugar[]>()
+
 	useEffect(() => {
 		axios.get('http://localhost:1337/allSugar')
 			.then(listOfSugar => {
-				setAllSugar(listOfSugar.data as Sugar[])
+				calculatePricePerKg(listOfSugar.data)
+				setFetchedSugar(listOfSugar.data as Sugar[])
 			})
 	}, [])
+
 
 	return (
 		<>
 			<Header title="Latest Sugar Prizes For All Countries" />
-			<main className="p-5">
-				<div className="flex flex-col justify-center w-full">
-					<DataSelector />
-					<CustomTable listOfData={allSugar || []} />
-				</div>
+			<main className="p-5 h-dvh bg-neutral-900">
+					<div className="flex gap-5 bg-blue-950 rounded-2xl p-4 mt-5">
+						<CustomTable listOfData={fetchedSugar || []} />
+					</div>
 			</main>
 		</>
 	)

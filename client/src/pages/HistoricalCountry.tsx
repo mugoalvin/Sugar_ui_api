@@ -1,10 +1,10 @@
 import { CustomTable } from '@/components/customTable'
-import DataSelector from '@/components/dataSelector'
 import Header from '@/components/Header'
 import { HistoryAllProps, Sugar } from '@/inferfaces'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { calculatePricePerKg } from './AllSugar'
 
 const HistoricalCountry = () => {
     const [countrySugar, setCountrySugar] = useState<HistoryAllProps>({} as HistoryAllProps)
@@ -24,17 +24,19 @@ const HistoricalCountry = () => {
     return (
         <>
             <Header title={`Historical records of ${country}`} />
-            <main className='p-5'>
+            <main className="p-5 h-dvh bg-neutral-900 overflow-y-scroll">
                 <div className="flex flex-col justify-center w-full">
-                    <DataSelector />
-                    <h1>Country: {countrySugar?.country}</h1>
+                    <h1 className=" text-5xl text-blue-100 font-bold mt-5 mb-3">{countrySugar?.country}</h1>
                     {
                         countrySugar?.days && Object.keys(countrySugar.days).map(day => {
+                            calculatePricePerKg(countrySugar.days[day])
                             return (
-                                <div key={day}>
-                                    <p>{day}</p>
-                                    <CustomTable listOfData={countrySugar.days[day] as Sugar[] || []} />
-                                </div>
+                                <section className="bg-blue-950 rounded-2xl p-4 mb-5">
+                                    <p className="text-neutral-500 ml-3 text-2xl">{`${day}`}</p>
+                                    <div className="flex gap-5 rounded-2xl p-4 mt-5">
+                                        <CustomTable listOfData={countrySugar.days[day] as Sugar[] || []} />
+                                    </div>
+                                </section>
                             )
                         })
                     }
