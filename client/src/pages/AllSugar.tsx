@@ -2,8 +2,8 @@ import { Sugar } from "@/inferfaces"
 import { useEffect, useState } from "react"
 import axios from 'axios'
 import { CustomTable } from "@/components/customTable"
-import DataSelector from "@/components/dataSelector"
 import Header from "@/components/Header"
+
 
 export const calculatePricePerKg = (products: Sugar[]) => {
 	products.forEach((sugar) => {
@@ -24,6 +24,9 @@ const AllSugar = () => {
 				calculatePricePerKg(listOfSugar.data)
 				setFetchedSugar(listOfSugar.data as Sugar[])
 			})
+
+		alert("I'd recommend sorting the table data by Price/Kg for a better experience",)
+
 	}, [])
 
 
@@ -31,9 +34,9 @@ const AllSugar = () => {
 		<>
 			<Header title="Latest Sugar Prizes For All Countries" />
 			<main className="p-5 h-dvh bg-neutral-900">
-					<div className="flex gap-5 bg-blue-950 rounded-2xl p-4 mt-5">
-						<CustomTable listOfData={fetchedSugar || []} />
-					</div>
+				<div className="flex gap-5 bg-blue-950 rounded-2xl p-4 mt-5">
+					<CustomTable listOfData={fetchedSugar || []} />
+				</div>
 			</main>
 		</>
 	)

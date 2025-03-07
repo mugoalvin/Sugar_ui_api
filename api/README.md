@@ -22,8 +22,8 @@ Ensure you have the following installed:
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/yourusername/sugar-api.git
-cd sugar-api
+git clone https://github.com/mugoalvin/Sugar_ui_api.git
+cd Sugar_ui_api
 ```
 
 ### Install Dependencies
@@ -55,10 +55,14 @@ export const AppDataSource = new DataSource({
 });
 ```
 
-### Run the Server
-
+### Run the Servers
 ```sh
 npm run dev
+```
+
+Open a different terminal and run:
+```sh
+cd ../client && npm run dev
 ```
 
 The API will be available at `http://localhost:1337/`
