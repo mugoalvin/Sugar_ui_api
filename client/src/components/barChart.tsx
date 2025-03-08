@@ -1,4 +1,3 @@
-import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts"
 import { Card,CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
@@ -28,7 +27,6 @@ export function CustomBarChart({ listOfData, date } : BarChartProps) {
 	return (
 		<Card className="w-1/2 bg-blue-950">
 			<CardHeader>
-				{/* <CardTitle>Bar Chart - Custom Label</CardTitle> */}
 				<CardTitle className="text-blue-100">Comparison Of Prices Per Kg</CardTitle>
 				<CardDescription className="text-neutral-400">{date}</CardDescription>
 			</CardHeader>

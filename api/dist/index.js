@@ -10,6 +10,14 @@ app.use(cors());
 app.get('/', async (req, res) => {
     res.send("Welcome to the Sugar API");
 });
+app.get('/countries', async (req, res) => {
+    const countries = await AppDataSource
+        .getRepository(Sugar)
+        .createQueryBuilder('sugar')
+        .distinctOn(["sugar.country"])
+        .getMany();
+    res.status(200).send(countries);
+});
 // ==================================================================1. Latest Sugar Prizes for all countries==================================================================
 app.get('/allSugar', async (req, res) => {
     try {

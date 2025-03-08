@@ -1,10 +1,18 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
 import { useNavigate } from "react-router-dom"
 import { Button } from "./ui/button"
+import { useEffect, useState } from 'react'
+import axios from "axios"
 
 const DataSelector = () => {
+	const [ countries, setCountries ] = useState<string[]>()
 	const navigate = useNavigate()
+
+	const getCountries = async () => {
+		const res = await axios.get('http://localhost:1337/countries')
+		setCountries(res.data.map((data: { country: string }) => data.country))
+	}
 
 	const openLink = (value: string) => {
 		if (value) navigate(value)
@@ -19,6 +27,10 @@ const DataSelector = () => {
 		event.stopPropagation()
 		if (country) navigate(`/historical/${country}`)
 	}
+
+	useEffect(() => {
+		getCountries()
+	}, [])
 
 	return (
 		<ToggleGroup type="single" variant="default" className="flex items-center justify-center shadow" onValueChange={(value) => openLink(value)}>
@@ -35,7 +47,7 @@ const DataSelector = () => {
 						<DropdownMenuLabel className="font-bold m-3 text-xl text-blue-200">Choose Country</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						{
-							["Kenya", "Uganda"].map(country => (
+							countries?.map(country => (
 								<DropdownMenuItem className="flex items-center justify-center h-8 m-2 text-blue-100" onClick={(event) => openCountry(event, country)}>
 									{country}
 								</DropdownMenuItem>

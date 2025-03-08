@@ -4,6 +4,9 @@ import axios from 'axios'
 import { CustomTable } from "@/components/customTable"
 import Header from "@/components/Header"
 
+import Swal from "sweetalert2"
+import withReactContent from 'sweetalert2-react-content'
+
 
 export const calculatePricePerKg = (products: Sugar[]) => {
 	products.forEach((sugar) => {
@@ -17,6 +20,7 @@ export const calculatePricePerKg = (products: Sugar[]) => {
 
 const AllSugar = () => {
 	const [fetchedSugar, setFetchedSugar] = useState<Sugar[]>()
+	const MySwal = withReactContent(Swal)
 
 	useEffect(() => {
 		axios.get('http://localhost:1337/allSugar')
@@ -25,7 +29,17 @@ const AllSugar = () => {
 				setFetchedSugar(listOfSugar.data as Sugar[])
 			})
 
-		alert("I'd recommend sorting the table data by Price/Kg for a better experience",)
+		const alertShown = localStorage.getItem('alertShown')
+		if (!alertShown) {
+			MySwal.fire({
+				title: 'Sorting Recommendation',
+				text: "I'd recommend sorting the table data by Price/Kg for a better experience",
+				icon: 'info',
+				confirmButtonText: 'OK'
+			}).then ( () =>{
+				localStorage.setItem('alertShown', 'true')
+			})
+		}
 
 	}, [])
 
